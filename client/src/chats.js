@@ -21,9 +21,14 @@ function Chat({socket, username, room}) {
     };
 
     useEffect(()=>{
+        socket.on("message", (data)=>{
+            setMessageList((list)=> [...list, data])
+        })
+
         socket.on("receive_message", (data)=>{
             setMessageList((list)=> [...list, data])
         })
+
     }, [socket])
 
     return (
@@ -57,7 +62,7 @@ function Chat({socket, username, room}) {
             <div className="chat-footer">
                 <input type="text" 
                 value={currentMessage}
-                placeholder="Hey"
+                placeholder="Hey.."
                 onChange={(event)=>{
                     setCurrentMessage(event.target.value)
                 }}
